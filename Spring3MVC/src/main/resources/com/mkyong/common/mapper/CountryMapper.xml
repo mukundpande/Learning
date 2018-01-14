@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.mkyong.common.mapper.CountryMapper'>
+
+	<resultMap type='com.mkyong.common.model.Country' id='CountryResult'>
+		<id property='countryId' column='COUNTRY_ID' />
+		<result property='countryName' column='COUNTRY_NAME' />
+	</resultMap>
+	<select id='getAllCountries' resultMap='CountryResult'>
+		SELECT * FROM COUNTRIES
+	</select>
+
+
+	<resultMap type='com.mkyong.common.model.Country' id='AllCountryResult'>
+		<id property='countryId' column='COUNTRY_ID' />
+		<result property='countryName' column='COUNTRY_NAME' />
+	</resultMap>
+	
+	<select	id="getAllCountriesFromProcedure"
+	 		parameterType="com.mkyong.common.model.CountryList"
+	        statementType="CALLABLE">
+		{CALL country_mgmt.get_countries(#{allcountryList,mode=OUT,jdbcType=CURSOR,resultMap=CountryResult})}
+	</select>
+</mapper>
